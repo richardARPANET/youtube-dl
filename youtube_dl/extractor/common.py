@@ -624,8 +624,10 @@ class InfoExtractor(object):
             if data is not None or headers:
                 url_or_request = sanitized_Request(url_or_request, data, headers)
         try:
+            time.sleep(4)
             return self._downloader.urlopen(url_or_request)
         except (compat_urllib_error.URLError, compat_http_client.HTTPException, socket.error) as err:
+            import q; q('URL which errors', url_or_request)
             if isinstance(err, compat_urllib_error.HTTPError):
                 if self.__can_accept_status_code(err, expected_status):
                     # Retain reference to error to prevent file object from
